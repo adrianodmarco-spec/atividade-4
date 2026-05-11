@@ -1,0 +1,23 @@
+function lengthOfLongestSubstring(s) {
+    const charMap = new Map(); // Guarda o caractere e seu último índice visto
+    let left = 0;
+    let maxLength = 0;
+
+    for (let right = 0; right < s.length; right++) {
+        const currentChar = s[right];
+
+        // Se o caractere já foi visto e está dentro da janela atual
+        if (charMap.has(currentChar) && charMap.get(currentChar) >= left) {
+            // Move o início da janela para logo após a ocorrência anterior
+            left = charMap.get(currentChar) + 1;
+        }
+
+        // Atualiza ou adiciona a posição do caractere no mapa
+        charMap.set(currentChar, right);
+
+        // Calcula o tamanho da janela atual e atualiza o máximo
+        maxLength = Math.max(maxLength, right - left + 1);
+    }
+
+    return maxLength;
+}
